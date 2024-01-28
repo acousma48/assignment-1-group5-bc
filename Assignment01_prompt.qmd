@@ -1,0 +1,407 @@
+---
+title: "Assignment 01"
+subtitle: "Designing Blockchain"
+date: 09/29/2023
+date-modified: last-modified
+date-format: long
+author:
+  - name: Nakul R. Padalkar
+    affiliations:
+      - id: gu
+        name: Georgetown University
+        city: Washington
+        state: DC
+  - name: Second Student 
+    affiliations:
+      - ref: gu
+  - name: Third Student
+    affiliations:
+      - ref: gu
+format:
+  html:
+    theme: [cosmo, theme.scss]
+    # toc: true
+    code-overflow: wrap
+    number-sections: true
+    self-contained: true
+    grid:
+      sidebar-width: 100px
+      body-width: 1000px
+      margin-width: 200px
+      gutter-width: 1.5rem
+# bibliography: references.bib
+tbl-cap-location: top
+crossref:
+  fig-title: '**Figure**'
+  fig-labels: '**arabic**'
+  title-delim: "**:**"
+  tbl-title: '**Table**'
+  tbl-labels: '**arabic**'
+editor: 
+  markdown: 
+    wrap: 65
+knitr:
+  opts_chunk: 
+    collapse: false
+    comment: "#>"
+    fig.path: "figures/"
+    fig.align: "center"
+    dev: "png"
+    echo: true
+    eval: false
+    message: false
+    warning: true
+    tidy: false
+    tidy.opts: 
+      blank: false
+      width.cutoff: 60
+      wrap: 60
+---
+
+# Assignment Instructions (remove this section before submission, else -10 points)
+::: {.callout-note}
+
+## Objective
+
+To design and implement a blockchain data structure using Python, with an emphasis on understanding each component and its integration.
+:::
+
+::: {.callout-note}
+## Tools
+
+Jupyter Notebook (recommended platforms: Google Colab or AWS SageMaker for lower-spec computers). Submission will include a Jupyter Notebook and an exported HTML/PDF file.
+:::
+::: {.callout-note}
+## Collaboration
+
+Group or individual work is allowed. Assignments are holistically graded.
+:::
+::: {.callout-note}
+
+## Integrity
+
+Original implementation is essential. Please cite sources to avoid plagiarism.
+:::
+::: {.callout-note}
+
+## Total Points: 75
+:::
+::: {.callout-note}
+
+## Submission Deadline
+
+Refer to the syllabus for assignment deadlines and grace periods.
+:::
+::: {.callout-warning}
+
+## Description
+
+Fundamentally, a blockchain is an amalgamation of several technologies. We would like to see each of those technologies built and combined in this assignment.
+Please use jupyter notebook to implement the following structures. You will upload a jupyter notebook and an HTML (exported from the notebook) to the canvas portal. There is no restriction on what IDE to use, but a cloud IDE like Google Collab or AWS Sagemaker would be your best choice if you have a low-power/configuration computer. All the assignments are graded holistically. All assignments in the class are group assignments (if you prefer, you can choose to work independently). 
+
+Since Blockchain is open-sourced, you will find most of the code online with a complete solution to most assignments. Please refrain from copy-pasting. The goal is to learn to build one from scratch to understand the technology. I will keep an eye on the submissions. Please list the source after the code to avoid any plagiarism and copying issues. 
+:::
+
+# Blockchain Data Structure
+
+Each blockchain starts with a Genesis block. We will need to define this block function in object-oriented Python. We need to implement the `hash_block()`, which computes the hash value of this block based on how we initialize it. This function takes in no parameters. 
+
+## Desired Functionality:
+- Concatenate string representations of all the class variables 
+- Computes the SHA256 hash of this concatenation. 
+
+## Importing Libraries
+
+Import the following libraries before developing the function `hashlib`, `random`, `datetime`, `date`, `time`, `ipyparallel`, `numpy`, `matplotlib`.
+
+```{python}
+# Import the libraries here
+```
+
+## Block Class
+
+The main `Block` components we will need:
+
+1.	index - The index of the block on the chain (zero-indexed)
+2.	timestamp – T time that the block was added to the chain
+3.	data - The data the block contains (Usually points to the root of a Merkel tree, but we can use a common thread for this)
+4.	previous_hash - The hash value of the previous block
+5.	hash - The hash of this block is computed using the hash_block function
+6.	nonce - The variable value that we change to alter the hash output (Default value = 0, irrelevant in this section)
+
+We will need to define two functions in class Object named Block, and the two functions are `__init__()` (called dunder init) and `blockHash()`.
+
+The dunder `init` function takes six inputs, including a self, from the list above (#5 above is the output). The `blockHash()` function takes inputs from dunder `init` in a string form, appends them, and encodes them through a `SHA256` function.
+
+::: {.callout-important}
+## Point Penalty Pitfalls
+**To get the full points, explain what each function does. Copying and running the code without any explanations will get you 85% of the points. Use your own words, and do not use AI Generation tools like ChaptGPT. The penalty for using AI models for assignments is an F in the assignment.**
+:::
+
+```{python}
+
+class Block:
+    def __init__():
+        # Your code for init Here
+
+
+    def blockHash(self):
+        # Your code for hash block Here
+        return 
+
+```
+
+## Generate the Genesis Block 
+
+```{python}
+# Follow the video to generate the genesis block hash 
+# block_time =  
+# data = 
+# previous_hash = '9136cfeb0c77b41e1e86cb9940ca9bb65f7aca4e8e366a8ecf9226b735e0c323'
+# index = 1
+# new_block = Block()
+# print(new_block.hash)
+```
+
+## Test Function
+
+Copy the following code in a new cell and run it. If you get a valid block prompt, your block code is correct.
+
+```{python}
+#| eval: false
+#| 
+def block_validation(index, block_time, data, previous_hash):
+    new_block = Block(index, block_time, data, previous_hash)
+    check_string = '260b5039394689051b599484df495d79a6a33d22a3ca37af72656d8cdfc6fcd5'
+    print_statement = "This is a valid Block" if str(new_block.hash) == check_string else "Please Check your work, this is incorrect."
+    print(print_statement)
+    
+block_time = '2023-12-30 23:59:59'
+data = 'Blockchain For Data Science'
+previous_hash = '9136cfeb0c77b41e1e86cb9940ca9bb65f7aca4e8e366a8ecf9226b735e0c323'
+index = 1
+block_validation(index, block_time, data, previous_hash)
+```
+
+    
+# Creating a chain out of single blocks
+
+Now that we have our class `Block()` completed, we need to build a chain out of them. Define a function that creates a `genesis_block()`. This will generate the first block of the chain. Then create the function `new_block()`, which builds a new block on top of a given block.
+
+The `genesis_block()` function has `index = 0`, `timestamp = Now` (whenever the function is being called), `data = "Genesis Block"`, `previous_hash = "0"` and a `return`. Be careful with `NOW` function (it requires `datetime` from `date` package). `New_block()` function will take the following inputs:
+
+1. `Last_block` = an instance of class Block, the block we're building our next block on top of.
+2. `index` = index of last_block + 1
+3. `timestamp` = Now (whenever the function is being called)
+4. `data` = `"Block {index} generated"` (for example, block with index 5 would have data: "Block 5 generated")
+5. `previous_hash` = hash of `last_block`
+
+::: {.callout-important}
+## Point Penalty Pitfalls
+**To get the full points, explain what each function does. Copying and running the code without any explanations will get you 85% of the points. Use your own words, and do not use AI Generation tools like ChaptGPT. The penalty for using AI models for assignments is an F in the assignment.**
+:::
+
+## Generating the Genesis Block
+
+```{python}
+# Creates the first block with current time and generic data
+def genesis_block():
+    # Manually construct a block with index zero and arbitrary previous hash using Block() class
+    # Your code for genesis block here
+    genesis_block = Block()
+    return genesis_block
+
+#Function that creates the next block, given the last block on the chain you want to mine on
+def next_block(last_block, nonce=0):
+    # Your code for next block here
+    this_index = 
+    this_timestamp = 
+    this_data = "Hey! I'm block " + str(this_index)
+    this_prevhash = 
+    this_block = Block()
+    return this_block
+```
+
+Once the function is generated, use the following code to test the validity
+
+```{python}
+#| eval: false
+def genesis_validation(genesis_block):
+    block_1 = next_block(genesis_block)
+    if block_1.index == 1 and block_1.data == "Block 1 generated" and block_1.previous_hash == genesis_block.hash and str(type(block_1.timestamp)) == "<class 'datetime.datetime'>":
+        print("Valid Genesis block" )
+    else:
+        print("Check the code, not a valid genesis block:(")
+
+genesis_block = # Use the function from above
+
+genesis_validation(genesis_block)
+```
+
+# Generating complete Blockchain
+
+::: {.callout-tip}
+## Retrace your steps
+**Following the instructions will get you the answer; if you are stuck somewhere, you have probably forgotten to change something to lower or upper case or might have missed a space. Just retrace your steps, and it will work.**
+:::
+
+We now have a complete program required to create a chain. We need variables (and/or functions) `blockchain`, `previous_block`, and `num_blocks` to generate a chain for a specified number of blocks. Use `num_blocks` as 10. Blockchain is used to initialize with the genesis block inside, initialized as a list. The variables and functions will:
+1. `previous_block` – points to the genesis block.
+2. `num_blocks` – the specific number of blocks to add to the chain. For the assignment, use 10.
+
+We want to complete the implementation of the function `complete_chain()`. It will take the above three inputs, which correspond to the initializations that we made earlier. 
+
+1.	The function will need a for loop from 0 to num blocks. Inside the loop, we will use `newblock()` function from #2 to add to the block list. 
+2.	Once the block is generated, we will append it to the blockchain array generated above. 
+3.	We will now set the block from step 1 as `previous_block`.
+4.	Print `(“the block #{} is added to the blockchain”.format(addedblock.index))`
+5.	`Print(“Hash : {}\n”.format(addedblock.hash))`
+
+::: {.callout-important}
+## Point Penalty Pitfalls
+**To get the full points, explain what each function does. Copying and running the code without any explanations will get you 85% of the points. Use your own words, and do not use AI Generation tools like ChaptGPT. The penalty for using AI models for assignments is an F in the assignment.**
+:::
+
+## Initialize the chain
+```{python}
+# Create the blockchain and add the genesis block
+blockchain = [] # this is similar to genesis_block from before
+
+# Create our initial reference to previous block which points to the genesis block
+previous_block = # get the first block from the blockchain object
+
+# How many blocks should we add to the chain after the genesis block
+num_blocks = 5 # Change this to 10 for the assignment
+```
+
+## Create a chain function
+```{python}
+def complete_chain(num_blocks, blockchain, previous_block):
+    # Add blocks to the chain
+    for i in range(0, num_blocks):
+        
+        # Your code for adding the block 
+        block_to_add = # use next block function
+        # append this block to the blockchain list
+        
+        # Set the block as the previous block for the next iteration
+        previous_block = # Set the previous block to the block you just added
+        
+        # Tell everyone about it!
+        print("Block #{} has been added to the blockchain!".format(block_to_add.index))
+        print("Hash: {}\n".format(block_to_add.hash))
+
+```
+
+## Print the Chain
+```{python}
+complete_chain(num_blocks, blockchain, previous_block)
+```
+
+You will see ten blocks with their hashes.
+
+# Nonce and Difficulty
+
+::: {.callout-important}
+## Point Penalty Pitfalls
+**To get the full points, explain what each function does. Copying and running the code without any explanations will get you 85% of the points. Use your own words, and do not use AI Generation tools like ChaptGPT. The penalty for using AI models for assignments is an F in the assignment.**
+:::
+
+We built a blockchain in assignment one. Let’s make it more realistic in assignment two by adding the proof-of-work consensus mechanism that Bitcoin’s Blockchain uses. We need to look at two concepts for proof of work and proof of stake simulation: Nonce and Difficulty.
+
+
+## Nonce
+
+1.	The Nonce – A randomly generated value added to the blocks to vary block hashes
+2.	The network specifies the difficulty. We will set this for the assignment. It defines the valid hashes (number of) out of all possible values. Greater difficulty indicates a lower number of valid hashes.
+
+### Define function generate_nonce() 
+
+There are multiple ways to develop `generate_nonce()`. We can use the following methods since this is a regular n-digit random number. Although we just need one method, you might be able to explore the ones you like. Computers can not generate true random numbers, so they use pseudo-random numbers. 
+
+1.	We can use `randint` function to generate a number between a and b. There is a limitation to this. What is that limitation?
+2.	`nonce = secrets.token_urlsafe()` generates cryptographically strong random numbers.
+3.	and many others, explore.
+
+```{python}
+import secrets
+import random as rand
+
+def generate_nonce(length=20):
+    # Your code for nonce here
+    digits = # use numbers from 0-9
+    nonce = # use random.choices to generate a random number or use secrets.choice
+    return nonce
+```
+
+### Define function generate_difficulty_bound()
+
+This is a bit harder to conceptualize. In Bitcoin, we usually look for the number of zeros before a hash to define the difficulty. One of the lecture notes and videos goes over the difficulty metric. We will use the same metric here.
+
+The function takes only one argument, `generate_difficulty_bound(difficulty=1)`.
+1.	Initiate an empty string that will hold our difficulty hash
+2.	We now need to generate a hex string that starts with zeros of size equal to "difficulty." So if `difficulty =1`, then the string will have 1 leading zero, `difficulty=2` will have 2 leading zeros. Use a `for` loop to generate this and append it to the string in 1.
+3.	In the same function, define a `for` loop to append a hex character, `F`. This loop should run for the range of length (64-difficulty).
+4.	We also need to prepend `0x` to the now completely formed string. 
+5.	This function should return the integer value from the string with a `base 16` (since this is a hex code).
+
+```{python}
+# difficulty = 4
+def generate_difficulty_bound(difficulty=1):
+    # Assign an empty string to store the difficulty hash
+
+    # for loop to generate the leading zeros (appending to the empty string) 
+    for i in range(difficulty):
+      # append the leading zeros to the empty string
+
+    # for loop to generate the trailing Fs (appending to the empty string)
+    for i in range(64 - difficulty):
+      # append the trailing Fs to the empty string
+  # prepend 0x to the string
+    diff_str =   # "0x" needs to be added at the front to specify that it is a hex representation
+    return (int(diff_str, 16))  # Specifies that we want to create an integer of base 16 (as opposed to the default  base 10)
+```
+
+### Engineer a nonce given the previous block’s hash and difficulty
+
+The function `find_next_block()` tries different blocks with the same data, index etc. but different nonces that satisfy the difficulty metric specified. This function takes three arguments `find_next_block(last_block, difficulty, nonce_length)`
+1.	Create variable `start_time = time.process_time()`.
+2.	Create a variable that stores `generate_difficulty_bound(difficulty)`.
+3.	Create a variable that sets `next_block(last_block)`.
+4.	Create a variable that stores the hashes tried and set the start value to 1 (`hashtried=1`). You will increment this in every loop.
+5.	Create a while loop that conditionally tests the new block's hash (in hex, so `int(new_block.hash, 16)`) to be greater than the `difficultybound` variable from #2 above.
+6.	Create a variable nonce to store `generate_nonce(nonce_length value)`
+7.	Create a new_block variable that used `Block()` function from before.
+8.	Increment `hashtried` by 1 (`hashtried +=1`)
+9.	`time_taken = time.process_time() – start_time` will calculate the time for finding the block.
+10.	Return the value of time taken, hashtried, and new block
+
+```{python}
+# Given a previous block and a difficulty metric, find a nonce that results in a lower hash value
+def find_next_block(last_block, difficulty, nonce_length):
+    # Assign the result of 'generate_difficulty_bound' with 'difficulty' as the argument to 'difficulty_bound'
+    difficulty_bound = 
+
+    # Capture the start time using 'time.process_time()'
+    start = 
+
+    # Generate the next block based on 'last_block' using an appropriate function
+    new_block = 
+
+    # Initialize the 'hashes_tried' counter to 1
+    hashes_tried = 
+    
+    # Implement a while loop that continues until the hash of 'new_block' 
+    # is less than or equal to 'difficulty_bound'.
+    # Inside the loop:
+    #   - Generate a new nonce using 'generate_nonce' with 'nonce_length'.
+    #   - Create a new instance of 'Block' with the new nonce and update 'new_block'.
+    #   - Increment 'hashes_tried' by 1 after each iteration.
+
+    #Your code for QUESTION 4 Ends here 
+    time_taken = time.process_time() - start
+    return(time_taken, hashes_tried, new_block)
+
+```
+
+This function will return the time taken, the number of hashes tried, and the new block. We will use this in the next assignment. 
